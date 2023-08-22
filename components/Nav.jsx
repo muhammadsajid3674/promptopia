@@ -9,12 +9,11 @@ const Nav = () => {
   const { data: session } = useSession();
   const [provider, setProvider] = useState(null)
   const [toggleDropdown, setToggleDropdown] = useState(false)
-  const setUpProviders = async () => {
-    const response = await getProviders();
-    setProvider(response)
-  }
   useEffect(() => {
-    setUpProviders()
+    (async () => {
+      const res = await getProviders();
+      setProvider(res);
+    })();
   }, [])
 
   return (
@@ -33,7 +32,7 @@ const Nav = () => {
 
         {/* Desktop Navigation */}
         {session?.user ? <div className='flex gap-3 md:gap-5'>
-          <Link href="/" className='black_btn'>Create Post</Link>
+          <Link href="/create-post" className='black_btn'>Create Post</Link>
           <button className='outline_btn' type='button' onClick={signOut}>Sign Out</button>
           <Link href="/profile">
             <Image
